@@ -17,24 +17,32 @@
         .bg-pink-light {
             background-color: #ffb6c1;
         }
+        .navbar-scrolled {
+        background-color: white;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+    
+    .navbar-scrolled .navbar-text {
+        color: #333;
+    }
     </style>
 </head>
 <body class="font-sans">
     <!-- Navbar -->
-    <nav class="bg-white shadow-md fixed w-full z-10">
-        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+    <nav class="fixed w-full z-20 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center">
-                <span class="text-3xl font-bold text-pink">Salon<span class="text-gray-800">Kita</span></span>
+                <span class="text-3xl font-bold text-pink">Salon<span class="text-white navbar-text">Kita</span></span>
             </div>
             <div class="hidden md:flex space-x-8">
-                <a href="#beranda" class="text-gray-800 hover:text-pink font-medium">Beranda</a>
-                <a href="#tentang" class="text-gray-800 hover:text-pink font-medium">Tentang Kami</a>
-                <a href="#program" class="text-gray-800 hover:text-pink font-medium">Program</a>
-                <a href="#testimoni" class="text-gray-800 hover:text-pink font-medium">Testimoni</a>
-                <a href="#kontak" class="text-gray-800 hover:text-pink font-medium">Kontak</a>
+                <a href="#beranda" class="text-white hover:text-pink font-medium navbar-text">Beranda</a>
+                <a href="#tentang" class="text-white hover:text-pink font-medium navbar-text">Tentang Program</a>
+                <a href="#bidang" class="text-white hover:text-pink font-medium navbar-text">Bidang</a>
+                <a href="#timeline" class="text-white hover:text-pink font-medium navbar-text">Timeline</a>
+                <a href="#kontak" class="text-white hover:text-pink font-medium navbar-text">Kontak</a>
             </div>
             <div class="md:hidden">
-                <button id="hamburger-btn" class="text-gray-800">
+                <button id="hamburger-btn" class="text-white navbar-text">
                     <i class="fas fa-bars text-2xl"></i>
                 </button>
             </div>
@@ -42,23 +50,28 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
             <a href="#beranda" class="block px-6 py-3 text-gray-800 hover:text-pink">Beranda</a>
-            <a href="#tentang" class="block px-6 py-3 text-gray-800 hover:text-pink">Tentang Kami</a>
-            <a href="#program" class="block px-6 py-3 text-gray-800 hover:text-pink">Program</a>
-            <a href="#testimoni" class="block px-6 py-3 text-gray-800 hover:text-pink">Testimoni</a>
+            <a href="#tentang" class="block px-6 py-3 text-gray-800 hover:text-pink">Tentang Program</a>
+            <a href="#program" class="block px-6 py-3 text-gray-800 hover:text-pink">bidang</a>
+            <a href="#timeline" class="block px-6 py-3 text-gray-800 hover:text-pink">Timeline</a>
             <a href="#kontak" class="block px-6 py-3 text-gray-800 hover:text-pink">Kontak</a>
         </div>
     </nav>
 
     <!-- Hero Banner -->
-    <section id="beranda" class="pt-24 bg-white">
-        <div class="container mx-auto px-6 py-16 flex md:gap-10 flex-col-reverse md:flex-row items-center">
-            <div class="md:w-1/2 flex flex-col items-start mt-8 md:mt-0">
-                <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">1000 Beasiswa Perempuan Indonesia</h1>
-                <p class="text-lg text-gray-600 mb-8">Kesempatan emas untuk berkarir di industri kecantikan dengan pelatihan, magang, dan jaminan penempatan kerja!</p>
-                <a href="#program" class="pink-gradient text-white font-bold py-3 px-8 rounded-full hover:opacity-90 transition duration-300 shadow-lg">Mulai Sekarang</a>
-            </div>
-            <div class="md:w-1/2">
-                <img src="banner.jpg" alt="SalonKita Training" class="rounded-lg shadow-xl">
+    <section id="beranda" class="relative w-full h-screen">
+        <!-- Background Image -->
+        <div class="absolute inset-0 w-full h-full">
+            <img src="banner.jpg" alt="SalonKita Banner" class="w-full h-full object-cover">
+            <!-- Overlay to make text more readable -->
+            <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        </div>
+        
+        <!-- Content centered over the banner -->
+        <div class="relative h-full flex items-center justify-center">
+            <div class="container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">1000 Beasiswa Perempuan Indonesia</h1>
+                <p class="text-lg md:text-xl text-white mb-8 max-w-2xl mx-auto">Kesempatan emas untuk berkarir di industri kecantikan dengan pelatihan, magang, dan jaminan penempatan kerja!</p>
+                <a href="#bidang" class="pink-gradient text-white font-bold py-3 px-8 rounded-full hover:opacity-90 transition duration-300 shadow-lg inline-block">Mulai Sekarang</a>
             </div>
         </div>
     </section>
@@ -587,10 +600,20 @@
         </div>
     </footer>
     <script>
-        const hamburgerBtn = document.getElementById('hamburger-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-    
-        hamburgerBtn.addEventListener('click', () => {
+        // Menambahkan event listener untuk scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+        });
+        
+        // Toggle menu mobile
+        document.getElementById('hamburger-btn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
         });
     </script>
